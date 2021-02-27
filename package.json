@@ -1,0 +1,21 @@
+{
+  "name": "osubot",
+  "version": "1.0.0",
+  "description": "The osu bot, working with gosumemory",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "valnesfjord",
+  "license": "ISC",
+  "dependencies": {
+    "bancho.js": "^0.9.7",
+    "eslint": "^7.20.0",
+    "irc": "^0.5.2",
+    "prequest": "^1.0.0",
+    "readline-sync": "^1.4.10",
+    "twitch-bot": "^1.3.5",
+    "websocket": "^1.0.33",
+    "ws": "^7.4.3"
+  }
+}

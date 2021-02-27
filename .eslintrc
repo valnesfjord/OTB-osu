@@ -1,0 +1,29 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "env": {
+        "node": true,
+        "mongo": true,
+        "es2021": true
+    },
+    "rules": {
+        "semi": ["error", "always"],
+        "use-isnan": "error",
+        "no-var": "error",
+        "no-unreachable": "error",
+        "no-empty": "warn",
+        "no-unused-vars": "error",
+        "require-await": "error",
+        "no-cond-assign": "error",
+        "for-direction": "error",
+        "no-constant-condition": "error",
+        "no-dupe-args": "error",
+        "no-dupe-keys": "error",
+        "no-empty-character-class": "error",
+        "dot-notation": "warn",
+        "no-else-return": "error",
+        "no-empty-pattern": "error",
+        "no-eq-null": "error"
+    }
+}
