@@ -1,4 +1,5 @@
 const ws = require('./api/gosumemory');
+const fs = require('fs');
 const Banchojs = require("bancho.js");
 const config = require('./config/configure');
 const client = new Banchojs.BanchoClient({ username: config.osuUsername, password: config.osuIRCPassword });
@@ -7,11 +8,13 @@ const functions = require('./api/functions');
 const osuApiKey = config.osuApiKey;
 const prequest = require('prequest');
 let mapInfo = null;
+
 if(ws !== null) {
 ws.on('message', function incoming(data) {
   mapInfo = JSON.parse(data);
 });
 }; 
+
 let client_channel;
 client.connect().then(() => {
   console.log(`[\x1b[35mOTBfO\x1b[0m] Connected to OSU! Bancho`);
@@ -61,4 +64,15 @@ bot.on('message', async chatter => {
         await client_channel.sendMessage(`Реквест от ${chatter.display_name}: [http://osu.ppy.sh/b/${bm.beatmap_id} ${bm.artist} - ${bm.title} [${bm.version}]] ${Number(bm.difficultyrating).toFixed(2)}☆ ${bm.bpm} BPM ${bm.diff_approach}AR ${bm.diff_overall}OD ${Number(bm.total_length/60).toFixed(0)}:${Math.floor(Number(bm.total_length) - (Number(bm.total_length)/60).toFixed(0) * 60).toString().padStart(2, '0')}♫`);
         return bot.say(`Реквест добавлен: [${state}] ${bm.artist} - ${bm.title} ${Number(bm.difficultyrating).toFixed(2)} ☆ [${bm.version}] by ${bm.creator}`);
   }
+});
+
+process.on('uncaughtException', (err, origin) => {
+  fs.writeFileSync(
+    'errorlog',
+    `Caught exception: ${err}\n` +
+    `Exception origin: ${origin}`
+  );
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('ERROR: ', reason.stack || reason);
 });
