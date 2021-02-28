@@ -36,10 +36,8 @@ bot.on('message', async chatter => {
     return bot.say(`Текущий скин: ${mapInfo.settings.folders.skin} GlitchCat`);
   }
   let link_tester = chatter.message.match(/(?:http:\/\/|https:\/\/)?(osu\.ppy\.sh\/)(beatmapsets|b)\/([0-9]*)#?(osu|taiko|catch|mania)?\/?([0-9]*)?\/?\+?([\S]*)?/ig);
-  console.log(link_tester);
   if(link_tester) {
     let link_matcher = link_tester[0].match(/^(?:http:\/\/|https:\/\/)?(osu\.ppy\.sh\/)(beatmapsets|b)\/([0-9]*)#?(osu|taiko|catch|mania)?\/?([0-9]*)?\/?\+?([\S]*)?/i);
-	console.log(link_matcher);
     let bm;
     if(!link_matcher[4] || !link_matcher[5]) {
       let req = await prequest(`https://osu.ppy.sh/api/get_beatmaps?k=${osuApiKey}&s=${link_matcher[3]}`);
