@@ -46,13 +46,13 @@ bot.on('message', async (chatter) => {
 				mapInfo.menu.bm.metadata.difficulty
 			}] ${mapInfo.menu.bm.stats.fullSR} ☆ by ${
 				mapInfo.menu.bm.metadata.mapper
-			} | Download: https://osu.ppy.sh/b/${mapInfo.menu.bm.id}#${functions.gamemodesReplacer(
+			} | Download: osu.ppy.sh/b/${mapInfo.menu.bm.id}#${functions.gamemodesReplacer(
 				mapInfo.menu.gameMode
 			)}/${mapInfo.menu.bm.set}`
 		);
 	}
 	if (chatter.message === '!skin' || chatter.message === '!cs' || chatter.message === '!скин') {
-		if (mapInfo === null) return bot.say('Не удаётся получить папку со скином в данный момент. BibleThump');
+		if (mapInfo === null) return bot.say('Не удаётся получить название скина в данный момент. BibleThump');
 		return bot.say(`Текущий скин: ${mapInfo.settings.folders.skin} GlitchCat`);
   }
   if (chatter.message === '!nppp' || chatter.message === '!mappp' || chatter.message === '!нппп') {
@@ -81,13 +81,13 @@ bot.on('message', async (chatter) => {
 			bm = req[0];
 		}
 		let state = bm.approved;
-		state = state.replace(/-2/, 'Заброшенная (Graveyard)');
-		state = state.replace(/-1/, 'В разработке (WIP)');
-		state = state.replace(/0/, 'Ожидающая (Pending)');
-		state = state.replace(/1/, 'Рейтинговая (Ranked)');
-		state = state.replace(/2/, 'Одобренная (Approved)');
-		state = state.replace(/3/, 'Квалифицированная (Qualified)');
-		state = state.replace(/4/, 'Любимая (Loved)');
+		state = state.replace(/-2/, 'Заброшенная');
+		state = state.replace(/-1/, 'В разработке');
+		state = state.replace(/0/, 'Ожидающая');
+		state = state.replace(/1/, 'Рейтинговая');
+		state = state.replace(/2/, 'Одобренная');
+		state = state.replace(/3/, 'Квалифицированная');
+		state = state.replace(/4/, 'Любимая');
 		await client_channel.sendMessage(
 			`Реквест от ${chatter.display_name}: [http://osu.ppy.sh/b/${bm.beatmap_id} ${bm.artist} - ${bm.title} [${
 				bm.version
@@ -100,7 +100,7 @@ bot.on('message', async (chatter) => {
 				.padStart(2, '0')}♫`
 		);
 		return bot.say(
-			`Реквест добавлен: [${state}] ${bm.artist} - ${bm.title} ${Number(bm.difficultyrating).toFixed(2)} ☆ [${
+			`Реквест отправлен: [${state}] ${bm.artist} - ${bm.title} ${Number(bm.difficultyrating).toFixed(2)} ☆ [${
 				bm.version
 			}] by ${bm.creator}`
 		);
