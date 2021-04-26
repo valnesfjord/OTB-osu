@@ -55,7 +55,7 @@ bot.on('message', async (chatter) => {
 		if (mapInfo === null) return bot.say('Не удаётся получить название скина в данный момент. BibleThump');
 		return bot.say(`Текущий скин: ${mapInfo.settings.folders.skin} GlitchCat`);
   }
-  if (chatter.message === '!nppp' || chatter.message === '!mappp' || chatter.message === '!нппп') {
+  if (chatter.message === '!nppp' || chatter.message === '!pp' || chatter.message === '!нппп') {
     if (mapInfo === null) return bot.say('Не удаётся получить играющую в данный момент песню. BibleThump');
     return bot.say(
 		`100%: ${mapInfo.menu.pp['100']}pp | 99%: ${mapInfo.menu.pp['99']}pp | 98%: ${mapInfo.menu.pp['98']}pp | 97%: ${mapInfo.menu.pp['97']}pp | 96%: ${mapInfo.menu.pp['96']}pp | 95%: ${mapInfo.menu.pp['95']}pp`
