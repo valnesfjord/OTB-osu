@@ -7,6 +7,7 @@ const bot = require('./api/Twitch');
 const functions = require('./api/functions');
 const osuApiKey = config.osuApiKey;
 const prequest = require('prequest');
+const interface_language_kit = require('./config/languages.json')[`${config.interface_language}_interface`];
 let mapInfo = null;
 
 if (ws !== null) {
@@ -40,27 +41,35 @@ bot.on('message', async (chatter) => {
 		chatter.message === '!нп' ||
 		chatter.message === '!сонг'
 	) {
-		if (mapInfo === null) return bot.say('Не удаётся получить играющую в данный момент песню. BibleThump');
+		if (mapInfo === null) return bot.say(interface_language_kit.error_finding_np);
 		return bot.say(
 			`${mapInfo.menu.bm.metadata.artist} - ${mapInfo.menu.bm.metadata.title} [${
 				mapInfo.menu.bm.metadata.difficulty
-			}] ${mapInfo.menu.bm.stats.fullSR} ☆ by ${
-				mapInfo.menu.bm.metadata.mapper
-			} | Download: osu.ppy.sh/b/${mapInfo.menu.bm.id}#${functions.gamemodesReplacer(
-				mapInfo.menu.gameMode
-			)}/${mapInfo.menu.bm.set}`
+			}] ${mapInfo.menu.bm.stats.fullSR} ☆ by ${mapInfo.menu.bm.metadata.mapper} | Download: osu.ppy.sh/b/${
+				mapInfo.menu.bm.id
+			}#${functions.gamemodesReplacer(mapInfo.menu.gameMode)}/${mapInfo.menu.bm.set}`
+		);
+	}
+	if (
+		chatter.message === '!osubot' ||
+		chatter.message === '!npbot' ||
+		chatter.message === '!осубот' ||
+		chatter.message === '!нпбот'
+	) {
+		return bot.say(
+			`I'm Opensource Twitch bot For Osu: https://github.com/valnesfjord/OTB-osu |Author: valnesfjord; Many thanks: Pirasto| Kappa`
 		);
 	}
 	if (chatter.message === '!skin' || chatter.message === '!cs' || chatter.message === '!скин') {
-		if (mapInfo === null) return bot.say('Не удаётся получить название скина в данный момент. BibleThump');
-		return bot.say(`Текущий скин: ${mapInfo.settings.folders.skin} GlitchCat`);
-  }
-  if (chatter.message === '!nppp' || chatter.message === '!pp' || chatter.message === '!нппп') {
-    if (mapInfo === null) return bot.say('Не удаётся получить играющую в данный момент песню. BibleThump');
-    return bot.say(
-		`100%: ${mapInfo.menu.pp['100']}pp | 99%: ${mapInfo.menu.pp['99']}pp | 98%: ${mapInfo.menu.pp['98']}pp | 97%: ${mapInfo.menu.pp['97']}pp | 96%: ${mapInfo.menu.pp['96']}pp | 95%: ${mapInfo.menu.pp['95']}pp`
-	);
-  }
+		if (mapInfo === null) return bot.say(interface_language_kit.error_finding_skin);
+		return bot.say(`${interface_language_kit.current_skin} ${mapInfo.settings.folders.skin} GlitchCat`);
+	}
+	if (chatter.message === '!nppp' || chatter.message === '!pp' || chatter.message === '!нппп') {
+		if (mapInfo === null) return bot.say(interface_language_kit.error_finding_np);
+		return bot.say(
+			`100%: ${mapInfo.menu.pp['100']}pp | 99%: ${mapInfo.menu.pp['99']}pp | 98%: ${mapInfo.menu.pp['98']}pp | 97%: ${mapInfo.menu.pp['97']}pp | 96%: ${mapInfo.menu.pp['96']}pp | 95%: ${mapInfo.menu.pp['95']}pp`
+		);
+	}
 	let link_tester = chatter.message.match(
 		/(?:http:\/\/|https:\/\/)?(osu\.ppy\.sh\/)(beatmapsets|b)\/([0-9]*)#?(osu|taiko|catch|mania)?\/?([0-9]*)?\/?\+?([\S]*)?/gi
 	);
@@ -81,15 +90,15 @@ bot.on('message', async (chatter) => {
 			bm = req[0];
 		}
 		let state = bm.approved;
-		state = state.replace(/-2/, 'Заброшенная');
-		state = state.replace(/-1/, 'В разработке');
-		state = state.replace(/0/, 'Ожидающая');
-		state = state.replace(/1/, 'Рейтинговая');
-		state = state.replace(/2/, 'Одобренная');
-		state = state.replace(/3/, 'Квалифицированная');
-		state = state.replace(/4/, 'Любимая');
+		state = state.replace(/-2/, interface_language_kit.map_graveyard);
+		state = state.replace(/-1/, interface_language_kit.map_wip);
+		state = state.replace(/0/, interface_language_kit.map_pending);
+		state = state.replace(/1/, interface_language_kit.map_ranked);
+		state = state.replace(/2/, interface_language_kit.map_approved);
+		state = state.replace(/3/, interface_language_kit.map_qualified);
+		state = state.replace(/4/, interface_language_kit.map_love);
 		await client_channel.sendMessage(
-			`Реквест от ${chatter.display_name}: [http://osu.ppy.sh/b/${bm.beatmap_id} ${bm.artist} - ${bm.title} [${
+			`${chatter.display_name} >> [http://osu.ppy.sh/b/${bm.beatmap_id} ${bm.artist} - ${bm.title} [${
 				bm.version
 			}]] ${Number(bm.difficultyrating).toFixed(2)}☆ ${bm.bpm} BPM ${bm.diff_approach}AR ${
 				bm.diff_overall
@@ -100,9 +109,9 @@ bot.on('message', async (chatter) => {
 				.padStart(2, '0')}♫`
 		);
 		return bot.say(
-			`Реквест отправлен: [${state}] ${bm.artist} - ${bm.title} ${Number(bm.difficultyrating).toFixed(2)} ☆ [${
-				bm.version
-			}] by ${bm.creator}`
+			`${interface_language_kit.request_added}[${state}] ${bm.artist} - ${bm.title} ${Number(
+				bm.difficultyrating
+			).toFixed(2)} ☆ [${bm.version}] by ${bm.creator}`
 		);
 	}
 });

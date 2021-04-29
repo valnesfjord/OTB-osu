@@ -1,26 +1,30 @@
 # Opensource Twitch Bot for Osu
 
-# Как установить?
-1. Скачайте и установите Node JS -> https://nodejs.org/en/
-2. Скачайте и установите GOsuMemory -> https://github.com/l3lackShark/gosumemory/releases
-3. Скачайте код данного репозитория, распакуйте в любую папку.
-4. Запустите файл start.bat и пройдите первоначальную настройку.
-5. Запустите OSU! и GOsuMemory
-6. Запустите бота.
+# [(RU readme here)](README_RU.md)
 
-# Список команд
-!np/!map/!nowplay/!нп/!сонг - отправляет в чат играющую сейчас песню (использует GOsuMemory)
+# How to install?
 
-!nppp/!нппп/!pp - отправляет в чат количество PP за играющую в данный момент песню (использует GOsuMemory)
+1. Download and install Node JS -> https://nodejs.org/en/
+2. Download and install GOsuMemory -> https://github.com/l3lackShark/gosumemory/releases
+3. Download this repository and unpack it to any folder.
+4. Start file start.bat and complete the first boot setup.
+5. Run OSU! and GOsuMemory
+6. Start bot (from start.bat file).
 
-!skin/!cs/!скин - отправляет в чат текущее название папки скина, который используется в игре (использует GOsuMemory)
+# Commands
 
-[Ссылка на осу карту] - отправляет реквест в ЛС осу.
+!np/!map/!nowplay/!нп/!сонг - Links current selected map in chat (uses Gosumemory)
 
-# Известные ошибки
-Иногда отваливается Twitch. Если через 10 секунд после запуска вы не получили сообщение в консоль о присоединении Twitch бота к чату вашего канала - перезапустите бота. (Fix скоро...);
+!nppp/!нппп/!pp - Sends pp map stats in chat (uses GOsuMemory)
 
-# Связь с автором
-Discord: valnesfjord#7776
-ВКонтакте: https://vk.com/cyournamec
-Telegram: @valnesfjord
+!skin/!cs/!скин - Sends current skin folder name, selected in game (uses GOsuMemory)
+
+[Osu! map link] - Sends map link in your osu! DMs and notifies about it in twitch chat.
+
+# Known errors
+
+Sometimes gets disconnected from Twitch. If you don't get Successfull Twitch chat connection message in console, restart bot (Fix soon...);
+
+# Author contacts
+
+Discord: valnesfjord#7776 VK: https://vk.com/cyournamec Telegram: @valnesfjord
