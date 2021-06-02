@@ -96,7 +96,7 @@ bot.on('message', async (chatter) => {
 		state = state.replace(/1/, interface_language_kit.map_ranked);
 		state = state.replace(/2/, interface_language_kit.map_approved);
 		state = state.replace(/3/, interface_language_kit.map_qualified);
-		state = state.replace(/4/, interface_language_kit.map_love);
+		state = state.replace(/4/, interface_language_kit.map_loved);
 		await client_channel.sendMessage(
 			`${chatter.display_name} >> [http://osu.ppy.sh/b/${bm.beatmap_id} ${bm.artist} - ${bm.title} [${
 				bm.version
