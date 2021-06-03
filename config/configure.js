@@ -1,6 +1,8 @@
 const readline = require('readline-sync');
 const fs = require('fs');
-const config = require('./config.json');
+const path = require('path');
+const configPath = path.join(process.cwd(),'config/config.json');
+const config = JSON.parse(fs.readFileSync(configPath, { encoding:'utf-8' }));
 
 if (
 	!config.osuApiKey ||
@@ -17,7 +19,7 @@ if (
 		(config_language === '' && config_language.toLowerCase() !== 'ru' && config_language.toLowerCase() !== 'en')
 	)
 		return console.log(`Incorrect input!`);
-	let language_kit = require('./languages.json')[`${config_language.toLowerCase()}_setup`];
+	let language_kit = JSON.parse(fs.readFileSync(path.join(process.cwd(),'/config/languages.json'), { encoding:'CP866' }))[`${config_language.toLowerCase()}_setup`];
 	let osuUsername = readline.question(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.osu_nick} \n`);
 	if (!osuUsername || osuUsername === '') return console.log(`${language_kit.incorrect_sting}`);
 	let osuApiKey = readline.question(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.osu_apikey} \n`);

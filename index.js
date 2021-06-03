@@ -1,4 +1,5 @@
 const ws = require('./api/gosumemory');
+const path = require('path');
 const fs = require('fs');
 const Banchojs = require('bancho.js');
 const config = require('./config/configure');
@@ -8,7 +9,7 @@ const functions = require('./api/functions');
 const osuApiKey = config.osuApiKey;
 const prequest = require('prequest');
 const commands = new (require('./commands/commands.js'));
-const interface_language_kit = require('./config/languages.json')[`${config.interface_language}_interface`];
+const interface_language_kit = JSON.parse(fs.readFileSync(path.join(process.cwd(),'/config/languages.json'), { encoding:'UTF-8' }))[`${config.interface_language}_interface`];
 
 
 let mapInfo = null;
