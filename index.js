@@ -1,14 +1,16 @@
+const config = require('./handlers/checkconfigs');
 const ws = require('./api/gosumemory');
 const fs = require('fs');
 const Banchojs = require('bancho.js');
-const config = require('./config/configure');
 const client = new Banchojs.BanchoClient({ username: config.osuUsername, password: config.osuIRCPassword });
 const bot = require('./api/Twitch');
 const functions = require('./api/functions');
 const osuApiKey = config.osuApiKey;
 const prequest = require('prequest');
-const commands = new (require('./commands/commands.js'))();
-const interfaceLanguageKit = require('./config/languages.json')[`${config.interface_language}_interface`];
+const commands = new (require('./handlers/hotReload.js'))('commands.json');
+const language_kit = new (require('./handlers/hotReload.js'))('languages.json', `${config.interface_language}_interface`);
+
+process.title = 'OTBfO';
 
 let mapInfo = null;
 
@@ -36,9 +38,9 @@ bot.on('error', (err) => {
 });
 
 bot.on('message', async (chatter) => {
-	switch (commands.findCommand(chatter.message)) {
-		case 'np':
-			if (mapInfo === null) return bot.say(interfaceLanguageKit.error_finding_np);
+	switch(commands.findCommand(chatter.message)){
+		case "np":
+			if (mapInfo === null) return bot.say(language_kit.config.error_finding_np);
 			return bot.say(
 				`${mapInfo.menu.bm.metadata.artist} - ${mapInfo.menu.bm.metadata.title} [${
 					mapInfo.menu.bm.metadata.difficulty
@@ -46,17 +48,17 @@ bot.on('message', async (chatter) => {
 					mapInfo.menu.bm.id
 				}#${functions.gamemodesReplacer(mapInfo.menu.gameMode)}/${mapInfo.menu.bm.set}`
 			);
-		case 'pp':
-			if (mapInfo === null) return bot.say(interfaceLanguageKit.error_finding_np);
+		case "pp":
+			if (mapInfo === null) return bot.say(language_kit.config.error_finding_np);
 			return bot.say(
 				`100%: ${mapInfo.menu.pp['100']}pp | 99%: ${mapInfo.menu.pp['99']}pp | 98%: ${mapInfo.menu.pp['98']}pp | 97%: ${mapInfo.menu.pp['97']}pp | 96%: ${mapInfo.menu.pp['96']}pp | 95%: ${mapInfo.menu.pp['95']}pp`
 			);
-		case 'skin':
-			if (mapInfo === null) return bot.say(interfaceLanguageKit.error_finding_skin);
-			return bot.say(`${interfaceLanguageKit.current_skin} ${mapInfo.settings.folders.skin} GlitchCat`);
-		case 'bot':
+		case "skin":
+			if (mapInfo === null) return bot.say(language_kit.config.error_finding_skin);
+			return bot.say(`${language_kit.config.current_skin} ${mapInfo.settings.folders.skin} GlitchCat`);
+		case "bot":
 			return bot.say(
-				`${interfaceLanguageKit.osu_bot}`
+				`${language_kit.config.osu_bot}`
 			);
 		default: {
 			const linkTester = chatter.message.match(
@@ -83,13 +85,13 @@ bot.on('message', async (chatter) => {
 					bm = req[0];
 				}
 				let state = bm.approved;
-				state = state.replace(/-2/, interfaceLanguageKit.map_graveyard);
-				state = state.replace(/-1/, interfaceLanguageKit.map_wip);
-				state = state.replace(/0/, interfaceLanguageKit.map_pending);
-				state = state.replace(/1/, interfaceLanguageKit.map_ranked);
-				state = state.replace(/2/, interfaceLanguageKit.map_approved);
-				state = state.replace(/3/, interfaceLanguageKit.map_qualified);
-				state = state.replace(/4/, interfaceLanguageKit.map_loved);
+				state = state.replace(/-2/, language_kit.config.map_graveyard);
+				state = state.replace(/-1/, language_kit.config.map_wip);
+				state = state.replace(/0/, language_kit.config.map_pending);
+				state = state.replace(/1/, language_kit.config.map_ranked);
+				state = state.replace(/2/, language_kit.config.map_approved);
+				state = state.replace(/3/, language_kit.config.map_qualified);
+				state = state.replace(/4/, language_kit.config.map_loved);
 				await clientChannel.sendMessage(
 					`${chatter.display_name} >> [http://osu.ppy.sh/b/${bm.beatmap_id} ${bm.artist} - ${bm.title} [${
 						bm.version
@@ -102,7 +104,7 @@ bot.on('message', async (chatter) => {
 						.padStart(2, '0')}♫`
 				);
 				return bot.say(
-					`${interfaceLanguageKit.request_added}[${state}] ${bm.artist} - ${bm.title} ${Number(
+					`${language_kit.config.request_added}[${state}] ${bm.artist} - ${bm.title} ${Number(
 						bm.difficultyrating
 					).toFixed(2)} ☆ [${bm.version}] by ${bm.creator}`
 				);
