@@ -1,6 +1,7 @@
 const WebSocket = require('node-reconnect-ws');
 const folder = require('../handlers/configure').gosumemory_folder;
 const { execFile } = require('child_process');
+const pslist = require('ps-list');
 const ws = new WebSocket({
 	url: 'ws://localhost:24050/ws',
 	reconnectInterval: 10000,
@@ -14,17 +15,25 @@ ws.on('error', () => {
 		);
 });
 
+async function isRunning(){
+	const list = await pslist({all: false});
+	return list.find((proc) => {
+		if (proc.name === 'gosumemory.exe') {
+			console.log("[\x1b[35mOTBfO\x1b[0m] Found gosumemory in process list, starting websocket");
+			return true;
+		}
+		return false;
+	});
+}
+
 async function spawnGOSU(){
-	if(folder){
+	if (await isRunning() !== undefined) return;
+	if (folder){
 		const path = (folder === true) ? 'gosumemory.exe' : `${folder}\\gosumemory.exe`;
-		execFile(path, (err, data) => {
-			if (err) {
-				console.log("[\x1b[31mERROR\x1b[0m] Can't open gosumemory, you probably forgot to set gosumemory folder in config.json");
-			}
-			else{
-				console.log("[\x1b[35mOTBfO\x1b[0m] Succesfully started gosumemory");
-			}
+		const child = execFile(`${path}`, (error) => {
+			if (error) console.log("[\x1b[31mERROR\x1b[0m] GOsumemory was wasn't started or closed reason, please restart the app");
 		});
+		if (child.pid) console.log("[\x1b[35mOTBfO\x1b[0m] GOsuMemory started");
 	}
 }
 
