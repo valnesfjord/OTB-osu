@@ -1,4 +1,4 @@
-const config = require('./config/configure');
+const config = require('./handlers/checkconfigs');
 const ws = require('./api/gosumemory');
 const path = require('path');
 const fs = require('fs');
@@ -8,9 +8,9 @@ const bot = require('./api/Twitch');
 const functions = require('./api/functions');
 const osuApiKey = config.osuApiKey;
 const prequest = require('prequest');
-const commands = new (require('./commands/commands.js'));
+const commands = new (require('./handlers/commands.js'));
 const interface_language_kit = JSON.parse(fs.readFileSync(path.join(process.cwd(),'/config/languages.json'), { encoding:'UTF-8' }))[`${config.interface_language}_interface`];
-
+process.title = 'OTBfO';
 
 let mapInfo = null;
 

@@ -1,6 +1,6 @@
 const { watch, readFileSync } = require('fs');
 const path = require('path');
-const configPath = path.join(__dirname+'/commands.json');
+const configPath = path.join(process.cwd()+'/config/commands.json');
 
 class commands {
     constructor() {

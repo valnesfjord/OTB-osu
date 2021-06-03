@@ -1,7 +1,8 @@
 const readline = require('synchronous-user-input');
 const fs = require('fs');
 const path = require('path');
-const configPath = path.join(process.cwd(),'config/config.json');
+const configPath = path.join(process.cwd(), 'config/config.json');
+const languagePath = path.join(process.cwd(), 'config/languages.json')
 const config = JSON.parse(fs.readFileSync(configPath, { encoding:'utf-8' }));
 
 if (
@@ -12,6 +13,7 @@ if (
 	!config.twitch_bot_username ||
 	!config.twitch_channel_name
 ) {
+	process.title = 'OTBfO: First Boot';
 	console.log(`[\x1b[35mOTBfO\x1b[0m] First boot setup!`);
 	let config_language = readline('[\x1b[35mOTBfO\x1b[0m] Quick start language (ru/en): \n');
 	if (
@@ -19,7 +21,7 @@ if (
 		(config_language === '' && config_language.toLowerCase() !== 'ru' && config_language.toLowerCase() !== 'en')
 	)
 		return console.log(`Incorrect input!`);
-	let language_kit = require('./languages.json')[`${config_language.toLowerCase()}_setup`];
+	let language_kit = require(languagePath)[`${config_language.toLowerCase()}_setup`];
 	let osuUsername = readline(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.osu_nick} \n`);
 	if (!osuUsername || osuUsername === '') return console.log(`${language_kit.incorrect_sting}`);
 	let osuApiKey = readline(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.osu_apikey} \n`);
