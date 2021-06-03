@@ -1,4 +1,4 @@
-const config = require('./config/configure');
+const config = require('./handlers/checkconfigs');
 const ws = require('./api/gosumemory');
 const fs = require('fs');
 const Banchojs = require('bancho.js');
