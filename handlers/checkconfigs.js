@@ -6,7 +6,7 @@ const folderPath = process.cwd()+'\\config\\',
     defaultconf = require('./defaults/config.json'),
     defaultcomd = require('./defaults/commands.json'),
     defaultlang = require('./defaults/languages.json');
-console.log(__dirname);
+
 if(!existsSync(folderPath)){
     mkdirSync(folderPath);
 }
