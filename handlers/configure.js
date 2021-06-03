@@ -2,7 +2,7 @@ const readline = require('synchronous-user-input');
 const fs = require('fs');
 const path = require('path');
 const configPath = path.join(process.cwd(), 'config/config.json');
-const languagePath = path.join(process.cwd(), 'config/languages.json')
+const languagePath = path.join(process.cwd(), 'config/languages.json');
 const config = JSON.parse(fs.readFileSync(configPath, { encoding:'utf-8' }));
 
 if (
@@ -50,8 +50,7 @@ if (
 		twitch_channel_name: twitch_channel_name,
 		interface_language: interface_language
 	};
-	current_config = JSON.stringify(current_config, null, 2);
-	fs.writeFileSync('config/config.json', current_config, (err) => {
+	fs.writeFileSync('config/config.json', JSON.stringify(current_config, null, 2), (err) => {
 		if (err) throw err;
 		console.log('Data written to file');
 	});
