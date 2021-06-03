@@ -1,4 +1,4 @@
-const readline = require('readline-sync');
+const readline = require('synchronous-user-input');
 const fs = require('fs');
 const config = require('./config.json');
 
@@ -11,26 +11,26 @@ if (
 	!config.twitch_channel_name
 ) {
 	console.log(`[\x1b[35mOTBfO\x1b[0m] First boot setup!`);
-	let config_language = readline.question('[\x1b[35mOTBfO\x1b[0m] Quick start language (ru/en): \n');
+	let config_language = readline('[\x1b[35mOTBfO\x1b[0m] Quick start language (ru/en): \n');
 	if (
 		!config_language ||
 		(config_language === '' && config_language.toLowerCase() !== 'ru' && config_language.toLowerCase() !== 'en')
 	)
 		return console.log(`Incorrect input!`);
 	let language_kit = require('./languages.json')[`${config_language.toLowerCase()}_setup`];
-	let osuUsername = readline.question(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.osu_nick} \n`);
+	let osuUsername = readline(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.osu_nick} \n`);
 	if (!osuUsername || osuUsername === '') return console.log(`${language_kit.incorrect_sting}`);
-	let osuApiKey = readline.question(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.osu_apikey} \n`);
+	let osuApiKey = readline(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.osu_apikey} \n`);
 	if (!osuApiKey || osuApiKey === '') return console.log(`${language_kit.incorrect_sting}`);
-	let osuIRCPassword = readline.question(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.osu_ircpassword} \n`);
+	let osuIRCPassword = readline(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.osu_ircpassword} \n`);
 	if (!osuIRCPassword || osuIRCPassword === '') return console.log(`${language_kit.incorrect_sting}`);
-	let twitch_bot_username = readline.question(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.twitch_botlogin} \n`);
+	let twitch_bot_username = readline(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.twitch_botlogin} \n`);
 	if (!twitch_bot_username || twitch_bot_username === '') return console.log(`${language_kit.incorrect_sting}`);
-	let twitch_bot_token = readline.question(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.twitch_bottoken} \n`);
+	let twitch_bot_token = readline(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.twitch_bottoken} \n`);
 	if (!twitch_bot_token || twitch_bot_token === '') return console.log(`${language_kit.incorrect_sting}`);
-	let twitch_channel_name = readline.question(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.twitch_channellogin} \n`);
+	let twitch_channel_name = readline(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.twitch_channellogin} \n`);
 	if (!twitch_channel_name || twitch_channel_name === '') return console.log(`${language_kit.incorrect_sting}`);
-	let interface_language = readline.question(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.interface_language} \n`);
+	let interface_language = readline(`[\x1b[35mOTBfO\x1b[0m] ${language_kit.interface_language} \n`);
 	if (
 		!interface_language ||
 		interface_language === '' ||
