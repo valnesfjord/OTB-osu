@@ -13,6 +13,7 @@
     "ru_interface": {
         "error_finding_np": "Не удаётся получить играющую в данный момент песню. BibleThump",
         "error_finding_skin": "Не удаётся получить название скина в данный момент. BibleThump",
+        "osu_bot": "Я - НП бот с открытым исходным кодом: https://github.com/valnesfjord/OTB-osu | Автор: valnesfjord; Огромное спасибо: Pirasto, robloxxa | Kappa",
         "current_skin": "Текущий скин:",
         "map_graveyard": "Заброшенная",
         "map_wip": "В разработке",
@@ -37,6 +38,7 @@
     "en_interface": {
         "error_finding_np": "Bot hook is broken. I can't see song. BibleThump",
         "error_finding_skin": "Bot hook is broken. I can't see skin folder. BibleThump",
+        "osu_bot": "I'm Opensource Twitch bot For Osu: https://github.com/valnesfjord/OTB-osu | Author: valnesfjord; Many thanks: Pirasto, robloxxa| Kappa",
         "current_skin": "Current skin:",
         "map_graveyard": "Graveyard",
         "map_wip": "WIP",
