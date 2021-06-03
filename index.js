@@ -1,6 +1,5 @@
-const config = require('./handlers/checkconfigs');
+const config = require('./config/configure');
 const ws = require('./api/gosumemory');
-const path = require('path');
 const fs = require('fs');
 const Banchojs = require('bancho.js');
 const client = new Banchojs.BanchoClient({ username: config.osuUsername, password: config.osuIRCPassword });
@@ -16,17 +15,17 @@ process.title = 'OTBfO';
 let mapInfo = null;
 
 if (ws !== null) {
-	ws.on('message', function incoming(data) {
+	ws.on('message', (data) => {
 		mapInfo = JSON.parse(data);
 	});
 }
 
-let client_channel;
+let clientChannel;
 client
 	.connect()
 	.then(() => {
 		console.log(`[\x1b[35mOTBfO\x1b[0m] Connected to OSU! Bancho`);
-		client_channel = client.getUser(config.osuUsername);
+		clientChannel = client.getUser(config.osuUsername);
 	})
 	.catch(console.error);
 
@@ -59,57 +58,63 @@ bot.on('message', async (chatter) => {
 			return bot.say(`${language_kit.config.current_skin} ${mapInfo.settings.folders.skin} GlitchCat`);
 		case "bot":
 			return bot.say(
-				`I'm Opensource Twitch bot For Osu: https://github.com/valnesfjord/OTB-osu | Author: valnesfjord; Many thanks: Pirasto| Kappa`
+				`${language_kit.config.osu_bot}`
 			);
-	}
-	let link_tester = chatter.message.match(
-		/(?:http:\/\/|https:\/\/)?(osu\.ppy\.sh\/)(beatmapsets|b)\/([0-9]*)#?(osu|taiko|catch|mania)?\/?([0-9]*)?\/?\+?([\S]*)?/gi
-	);
-	if (link_tester) {
-		let link_matcher = link_tester[0].match(
-			/^(?:http:\/\/|https:\/\/)?(osu\.ppy\.sh\/)(beatmapsets|b)\/([0-9]*)#?(osu|taiko|catch|mania)?\/?([0-9]*)?\/?\+?([\S]*)?/i
-		);
-		let bm;
-		if (!link_matcher[4] || !link_matcher[5]) {
-			let req = await prequest(`https://osu.ppy.sh/api/get_beatmaps?k=${osuApiKey}&s=${link_matcher[3]}`);
-			if (req.length === 0) return;
-			bm = req[req.length - 1];
-		}
-		if (!bm) {
-			let req = await prequest(`https://osu.ppy.sh/api/get_beatmaps?k=${osuApiKey}&b=${link_matcher[5]}`);
+		default: {
+			const linkTester = chatter.message.match(
+				/(?:http:\/\/|https:\/\/)?(osu\.ppy\.sh\/)(beatmapsets|b)\/([0-9]*)#?(osu|taiko|catch|mania)?\/?([0-9]*)?\/?\+?([\S]*)?/gi
+			);
+			if (linkTester) {
+				const linkMatcher = linkTester[0].match(
+					/^(?:http:\/\/|https:\/\/)?(osu\.ppy\.sh\/)(beatmapsets|b)\/([0-9]*)#?(osu|taiko|catch|mania)?\/?([0-9]*)?\/?\+?([\S]*)?/i
+				);
+				let bm;
+				if (!linkMatcher[4] || !linkMatcher[5]) {
+					const req = await prequest(
+						`https://osu.ppy.sh/api/get_beatmaps?k=${osuApiKey}&s=${linkMatcher[3]}`
+					);
+					if (req.length === 0) return;
+					bm = req[req.length - 1];
+				}
+				if (!bm) {
+					const req = await prequest(
+						`https://osu.ppy.sh/api/get_beatmaps?k=${osuApiKey}&b=${linkMatcher[5]}`
+					);
 
-			if (req.length === 0) return;
-			bm = req[0];
+					if (req.length === 0) return;
+					bm = req[0];
+				}
+				let state = bm.approved;
+				state = state.replace(/-2/, language_kit.config.map_graveyard);
+				state = state.replace(/-1/, language_kit.config.map_wip);
+				state = state.replace(/0/, language_kit.config.map_pending);
+				state = state.replace(/1/, language_kit.config.map_ranked);
+				state = state.replace(/2/, language_kit.config.map_approved);
+				state = state.replace(/3/, language_kit.config.map_qualified);
+				state = state.replace(/4/, language_kit.config.map_loved);
+				await clientChannel.sendMessage(
+					`${chatter.display_name} >> [http://osu.ppy.sh/b/${bm.beatmap_id} ${bm.artist} - ${bm.title} [${
+						bm.version
+					}]] ${Number(bm.difficultyrating).toFixed(2)}☆ ${bm.bpm} BPM ${bm.diff_approach}AR ${
+						bm.diff_overall
+					}OD ${Number(bm.total_length / 60).toFixed(0)}:${Math.floor(
+						Number(bm.total_length) - (Number(bm.total_length) / 60).toFixed(0) * 60
+					)
+						.toString()
+						.padStart(2, '0')}♫`
+				);
+				return bot.say(
+					`${language_kit.config.request_added}[${state}] ${bm.artist} - ${bm.title} ${Number(
+						bm.difficultyrating
+					).toFixed(2)} ☆ [${bm.version}] by ${bm.creator}`
+				);
+			}
 		}
-		let state = bm.approved;
-		state = state.replace(/-2/, language_kit.config.map_graveyard);
-		state = state.replace(/-1/, language_kit.config.map_wip);
-		state = state.replace(/0/, language_kit.config.map_pending);
-		state = state.replace(/1/, language_kit.config.map_ranked);
-		state = state.replace(/2/, language_kit.config.map_approved);
-		state = state.replace(/3/, language_kit.config.map_qualified);
-		state = state.replace(/4/, language_kit.config.map_loved);
-		await client_channel.sendMessage(
-			`${chatter.display_name} >> [http://osu.ppy.sh/b/${bm.beatmap_id} ${bm.artist} - ${bm.title} [${
-				bm.version
-			}]] ${Number(bm.difficultyrating).toFixed(2)}☆ ${bm.bpm} BPM ${bm.diff_approach}AR ${
-				bm.diff_overall
-			}OD ${Number(bm.total_length / 60).toFixed(0)}:${Math.floor(
-				Number(bm.total_length) - (Number(bm.total_length) / 60).toFixed(0) * 60
-			)
-				.toString()
-				.padStart(2, '0')}♫`
-		);
-		return bot.say(
-			`${language_kit.config.request_added}[${state}] ${bm.artist} - ${bm.title} ${Number(
-				bm.difficultyrating
-			).toFixed(2)} ☆ [${bm.version}] by ${bm.creator}`
-		);
 	}
 });
 
 process.on('uncaughtException', (err, origin) => {
-	fs.writeFileSync('errorlog', `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
+	fs.writeFileSync('errorlog', `Caught exception: ${err}\nException origin: ${origin}`);
 });
 
 process.on('unhandledRejection', (reason) => {
