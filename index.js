@@ -1,8 +1,8 @@
+const config = require('./config/configure');
 const ws = require('./api/gosumemory');
 const path = require('path');
 const fs = require('fs');
 const Banchojs = require('bancho.js');
-const config = require('./config/configure');
 const client = new Banchojs.BanchoClient({ username: config.osuUsername, password: config.osuIRCPassword });
 const bot = require('./api/Twitch');
 const functions = require('./api/functions');
