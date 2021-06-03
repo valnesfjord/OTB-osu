@@ -1,18 +1,23 @@
 const { watch, readFileSync } = require('fs');
-const path = require('path');
-const configPath = path.join(process.cwd()+'/config/commands.json');
 
-class commands {
-    constructor() {
+class hotReload {
+    constructor(configName = "", key = "") {
+        this.configPath = process.cwd()+`//config//${configName}`;
         this.configFile = {};
+        this.key = key;
         this.updateConfig();
         this.watchConfig();
     }
+
+    get config(){
+        return (this.key === "") ? this.configFile : this.configFile[this.key];
+    }
+
     updateConfig(){
-        this.configFile = JSON.parse(readFileSync(configPath, {encoding: 'utf-8'}));
+        this.configFile = JSON.parse(readFileSync(this.configPath, {encoding: 'utf-8'}));
     }
     watchConfig(){
-        watch(configPath, (eventType) => {
+        watch(this.configPath, (eventType) => {
             if(eventType === 'change') this.updateConfig();
         });
     }
@@ -26,4 +31,4 @@ class commands {
     }
 }
 
-module.exports = commands;
+module.exports = hotReload;
