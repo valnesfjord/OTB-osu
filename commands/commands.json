@@ -1,0 +1,29 @@
+{
+  "np": [
+    "np",
+    "map",
+    "nowplay",
+    "nowplaying",
+    "нп",
+    "сонг"
+  ],
+  "pp": [
+    "nppp",
+    "pp",
+    "пп",
+    "нппп"
+  ],
+  "skin": [
+    "skin",
+    "cs",
+    "currentskin",
+    "скин"
+  ],
+  "bot": [
+    "npbot",
+    "osubot",
+    "нпбот",
+    "осубот",
+    "бот"
+  ]
+}
