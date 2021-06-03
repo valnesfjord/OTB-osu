@@ -6,4 +6,8 @@ const bot = new TwitchBot({
     channels: [config.twitch_channel_name]
 });
 
+bot.on('error', (err) => {
+    console.log(err);
+});
+
 module.exports = bot;

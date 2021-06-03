@@ -1,40 +1,26 @@
 const config = require('./handlers/checkconfigs');
-const ws = require('./api/gosumemory');
 const fs = require('fs');
-const Banchojs = require('bancho.js');
-const client = new Banchojs.BanchoClient({ username: config.osuUsername, password: config.osuIRCPassword });
-const bot = require('./api/Twitch');
+const bot = require('./api/twitch');
 const functions = require('./api/functions');
+const clientChannel = require('./api/bancho');
 const osuApiKey = config.osuApiKey;
 const prequest = require('prequest');
 const commands = new (require('./handlers/hotReload.js'))('commands.json');
 const language_kit = new (require('./handlers/hotReload.js'))('languages.json', `${config.interface_language}_interface`);
+const { ws, spawnGOSU } = require('./api/gosumemory');
 
 process.title = 'OTBfO';
 
 let mapInfo = null;
 
-if (ws !== null) {
-	ws.on('message', (data) => {
-		mapInfo = JSON.parse(data);
-	});
-}
-
-let clientChannel;
-client
-	.connect()
-	.then(() => {
-		console.log(`[\x1b[35mOTBfO\x1b[0m] Connected to OSU! Bancho`);
-		clientChannel = client.getUser(config.osuUsername);
-	})
-	.catch(console.error);
-
-bot.on('join', (channel) => {
-	console.log(`[\x1b[35mOTBfO\x1b[0m] Twitch bot joined your channel: ${channel}`);
+ws.on('message', (data) => {
+	mapInfo = JSON.parse(data);
 });
 
-bot.on('error', (err) => {
-	console.log(err);
+bot.on('join', async (channel) => {
+	console.log(`[\x1b[35mOTBfO\x1b[0m] Twitch bot joined your channel: ${channel}`);
+	await spawnGOSU();
+	setTimeout(() => { ws.connect(); } ,5000);
 });
 
 bot.on('message', async (chatter) => {
