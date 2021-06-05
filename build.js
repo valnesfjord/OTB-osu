@@ -14,6 +14,7 @@ const caxa = require('caxa').default;
             "**/config/**",
             "*.md",
             ".*",
+            "*.log",
             "eslintrc.json"
         ]
     });
