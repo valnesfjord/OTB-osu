@@ -6,5 +6,5 @@
     "twitch_channel_name": null,
     "osuApiKey": null,
     "interface_language": null,
-    "gosumemory_folder": false
+    "gosumemory_folder": null
 }
