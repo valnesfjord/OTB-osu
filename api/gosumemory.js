@@ -17,9 +17,9 @@ ws.on('error', () => {
 });
 
 function correctPath(){
-	if (folder) return false;
-	if (existsSync('gosumemory.exe')) return 'gosumemory.exe'
-	if (existsSync(folder+'//gosumemory.exe')) return folder+'//gosumemory.exe'
+	if (!folder) return false;
+	if (existsSync('gosumemory.exe')) return 'gosumemory.exe';
+	if (existsSync(folder)) return folder;
 	return false;
 }
 
@@ -46,7 +46,7 @@ async function spawnGOSU(){
 			if (child.pid) {
 				console.log("[\x1b[35mOTBfO\x1b[0m] GOsuMemory started");
 				child.stdout.on('data', (data) => {
-					data.toString().trim().split('\n').forEach((x) => { console.log(`[\x1b[36mGOsuMemory\x1b[0m] ${x}`) })
+					data.toString().trim().split('\n').forEach((x) => { console.log(`[\x1b[36mGOsuMemory\x1b[0m] ${x}`); });
 				});
 				resolve(child);
 			}
