@@ -1,6 +1,7 @@
 const WebSocket = require('node-reconnect-ws');
 const folder = require('../handlers/configure').gosumemory_folder;
 const { execFile } = require('child_process');
+const { existsSync } = require('fs');
 const pslist = require('ps-list');
 const ws = new WebSocket({
 	url: 'ws://localhost:24050/ws',
@@ -15,6 +16,13 @@ ws.on('error', () => {
 		);
 });
 
+function correctPath(){
+	if (folder) return false;
+	if (existsSync('gosumemory.exe')) return 'gosumemory.exe'
+	if (existsSync(folder+'//gosumemory.exe')) return folder+'//gosumemory.exe'
+	return false;
+}
+
 async function isRunning(){
 	const list = await pslist({all: false});
 	return list.find((proc) => {
@@ -28,13 +36,23 @@ async function isRunning(){
 
 async function spawnGOSU(){
 	if (await isRunning() !== undefined) return;
-	if (folder){
-		const path = (folder === true) ? 'gosumemory.exe' : `${folder}\\gosumemory.exe`;
-		const child = execFile(`${path}`, (error) => {
-			if (error) console.log("[\x1b[31mERROR\x1b[0m] GOsumemory was wasn't started or closed reason, please restart the app");
-		});
-		if (child.pid) console.log("[\x1b[35mOTBfO\x1b[0m] GOsuMemory started");
-	}
+	const path = correctPath();
+	return new Promise((resolve, reject) => {
+		if (path){
+			const child = execFile(`${path}`, (error) => {
+				console.error("[\x1b[31mERROR\x1b[0m] GOsumemory wasn't started or closed, please folder path is correct");
+				reject(error);
+			});
+			if (child.pid) {
+				console.log("[\x1b[35mOTBfO\x1b[0m] GOsuMemory started");
+				child.stdout.on('data', (data) => {
+					data.toString().trim().split('\n').forEach((x) => { console.log(`[\x1b[36mGOsuMemory\x1b[0m] ${x}`) })
+				});
+				resolve(child);
+			}
+		}
+		resolve();
+	});
 }
 
 module.exports = {
