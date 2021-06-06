@@ -8,18 +8,8 @@ const ws = new Ws({
 let Data = null;
 
 async function connect(){
-    console.log(
-        `[\x1b[35mOTBfO\x1b[0m] Trying connect to GOsuMemory websocket`
-    );
-    setTimeout(() => {
-        ws.connect();
-        },
-        5000);
+    ws.connect();
 }
-
-const mapData = () => {
-    return Data;
-};
 
 ws.on('error', () => {
     console.log(
@@ -38,6 +28,6 @@ ws.on('message', (data) => {
     module.exports.data = JSON.parse(data);
 });
 
-
-
 module.exports.connect = connect;
+
+//TODO: Сделать Lang_kit для апи
