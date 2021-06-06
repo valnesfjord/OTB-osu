@@ -1,20 +1,7 @@
-const WebSocket = require('node-reconnect-ws');
 const folder = require('../handlers/configure').gosumemory_folder;
 const { execFile } = require('child_process');
 const { existsSync } = require('fs');
 const pslist = require('ps-list');
-const ws = new WebSocket({
-	url: 'ws://localhost:24050/ws',
-	reconnectInterval: 10000,
-	autoConnect: false,
-	maxRetries: Infinity
-});
-
-ws.on('error', () => {
-		console.log(
-			`[\x1b[31mERROR\x1b[0m] GOsuMemory WS connecting error. Maybe you don't start it. Please start GOsuMemory.`
-		);
-});
 
 function correctPath(){
 	if (!folder) return false;
@@ -34,7 +21,7 @@ async function isRunning(){
 	});
 }
 
-async function spawnGOSU(){
+async function spawn(){
 	if (await isRunning() !== undefined) return;
 	const path = correctPath();
 	return new Promise((resolve, reject) => {
@@ -56,8 +43,7 @@ async function spawnGOSU(){
 }
 
 module.exports = {
-	ws,
-	spawnGOSU
+	spawn
 };
 
 

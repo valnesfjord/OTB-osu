@@ -11,12 +11,12 @@ const bot = new tmi.Client({
     },
     channels: [ config.twitch_channel_name ]
 });
-
-async function TwitchConnect(){
+async function connect(){
     return new Promise(((resolve, reject) => {
         bot.connect()
             .then(() => {
                 console.log(`[\x1b[35mOTBfO\x1b[0m] Twitch bot joined your channel: ${config.twitch_channel_name}`);
+                require('./message');
                 resolve();
             })
             .catch((err) => {
@@ -26,11 +26,8 @@ async function TwitchConnect(){
     }));
 }
 
-bot.on('error', (err) => {
-    console.log(err);
-});
 
 module.exports = {
     bot,
-    TwitchConnect
+    connect
 };

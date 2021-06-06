@@ -7,7 +7,7 @@ const child = fork(__dirname+'//bot.js', {
 
 
 child.stdout.on('data', (data) => {
-    let log = data.toString().trim();
+    const log = data.toString().trim();
     if (log === "socket close" || log === "socket open" || log.endsWith('socket close')) return;
     console.log(log);
 });
