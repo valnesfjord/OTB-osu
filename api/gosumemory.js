@@ -1,4 +1,4 @@
-const folder = require('../handlers/configure').gosumemory_folder;
+const folder = require('../configHandle').settings.gosumemory_folder+"\\gosumemory.exe";;
 const { execFile } = require('child_process');
 const { existsSync } = require('fs');
 const pslist = require('ps-list');
@@ -27,18 +27,26 @@ async function spawn(){
 	return new Promise((resolve, reject) => {
 		if (path){
 			const child = execFile(`${path}`, (error) => {
-				console.error("[\x1b[31mERROR\x1b[0m] GOsumemory wasn't started or closed, please folder path is correct");
+				console.error("[\x1b[31mERROR\x1b[0m] GOsumemory wasn't started or closed, please check that folder path is correct");
 				reject(error);
 			});
 			if (child.pid) {
-				console.log("[\x1b[35mOTBfO\x1b[0m] GOsuMemory started");
+				console.log("[\x1b[35mOTBfO\x1b[0m] Waiting for gosumemory to initialize");
 				child.stdout.on('data', (data) => {
-					data.toString().trim().split('\n').forEach((x) => { console.log(`[\x1b[36mGOsuMemory\x1b[0m] ${x}`); });
+					data.toString().trim().split('\n').forEach((x) => {
+						if (x.startsWith('Initialization complete')) {
+							console.log("[\x1b[35mOTBfO\x1b[0m] GOsuMemory Started");
+							resolve();
+						}
+					});
+					// data.toString().trim().split('\n').forEach((x) => { console.log(`[\x1b[36mGOsuMemory\x1b[0m] ${x}`); }); // Я не уверен нужно ли выводить сообщения с gosumemory
 				});
-				resolve(child);
+				// setTimeout(() => {  }, 4000); //Give gosumemory time to initializate
 			}
 		}
-		resolve();
+		else{
+			resolve();
+		}
 	});
 }
 
@@ -46,6 +54,7 @@ module.exports = {
 	spawn
 };
 
+//TODO: Сделать Lang_kit для апи
 
 
 
