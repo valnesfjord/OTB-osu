@@ -10,12 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "bancho.js": "^0.9.7",
+    "download-github-release": "^0.3.2",
     "eslint": "^7.20.0",
     "irc": "^0.5.2",
     "node-reconnect-ws": "^0.2.5",
     "prequest": "^1.0.0",
+    "prompts": "^2.4.1",
     "ps-list": "^7.2.0",
-    "synchronous-user-input": "0.0.4",
     "tmi.js": "^1.8.3",
     "websocket": "^1.0.33",
     "ws": "^7.4.3"
