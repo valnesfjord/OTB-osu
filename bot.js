@@ -1,14 +1,11 @@
-require('./handlers/checkconfigs');
-const Twitch = require('./api/twitch');
-const Bancho = require('./api/bancho');
-const GOsuMemory = require('./api/gosumemory');
-const ws = require('./api/ws');
+
+
 
 (async () => {
-	await GOsuMemory.spawn();
-	await ws.connect();
-	await Bancho.connect();
-	await Twitch.connect();
+	await require('./api/gosumemory').spawn();
+	await require('./api/ws').connect();
+	await require('./api/twitch').connect();
+	await require('./api/bancho').connect();
 })().catch((err) => {
 	console.error(err);
 });
