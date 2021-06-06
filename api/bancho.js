@@ -1,10 +1,10 @@
-const { settings, lang_kit } = require('../configHandle').settings;
+const { settings, lang_kit } = require('../configHandle');
 const Bancho = new (require('bancho.js')).BanchoClient({
     username: settings.osuUsername,
     password: settings.osuIRCPassword
 });
 const Client = Bancho.getSelf();
-//TODO: Сделать Lang_kit для апи
+
 async function connect() {
     return new Promise(((resolve, reject) => {
         Bancho
@@ -24,5 +24,6 @@ async function say(message) {
     await Client.sendMessage(message);
 }
 
-
 module.exports = { connect, say };
+
+//TODO: Сделать Lang_kit для апи
