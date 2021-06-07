@@ -1,6 +1,3 @@
-
-
-
 (async () => {
 	await require('./api/gosumemory').spawn();
 	await require('./api/ws').connect();
