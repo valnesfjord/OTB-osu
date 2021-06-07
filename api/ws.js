@@ -33,13 +33,16 @@ ws.on('error', () => {
 	console.log(`[\x1b[31mERROR\x1b[0m] ${lang_kit.ws_connect_error}`);
 	module.exports.data = null;
 });
+ws.on('close', () => {
+	console.log(`[\x1b[35mOTBfO\x1b[0m] SC`);
+});
 
 ws.on('open', () => {
 	console.log(`[\x1b[35mOTBfO\x1b[0m] ${lang_kit.ws_connected}`);
 });
 
 ws.on('message', (data) => {
-	socketData = data;
+	socketData = JSON.parse(data);
 });
 
 module.exports.data = null;
