@@ -12,7 +12,7 @@ bot.on('message', async (channel, chatter, message, self) => {
 	switch (commands.findCommand(message)) {
 		case 'np': {
 			const data = await getOsuData();
-			if (!data || (data && data.error)) return bot.say(channel, lang_kit.error_finding_np);
+			if (!data) return bot.say(channel, lang_kit.error_finding_np);
 			return bot.say(
 				channel,
 				`${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title} [${
@@ -24,7 +24,7 @@ bot.on('message', async (channel, chatter, message, self) => {
 		}
 		case 'pp': {
 			const data = await getOsuData();
-			if (!data || (data && data.error)) return bot.say(channel, lang_kit.error_finding_np);
+			if (!data) return bot.say(channel, lang_kit.error_finding_np);
 			return bot.say(
 				channel,
 				`100%: ${data.menu.pp['100']}pp | 99%: ${data.menu.pp['99']}pp | 98%: ${data.menu.pp['98']}pp | 97%: ${data.menu.pp['97']}pp | 96%: ${data.menu.pp['96']}pp | 95%: ${data.menu.pp['95']}pp`
@@ -32,7 +32,7 @@ bot.on('message', async (channel, chatter, message, self) => {
 		}
 		case 'skin': {
 			const data = await getOsuData();
-			if (!data || (data && data.error)) return bot.say(channel, lang_kit.error_finding_skin);
+			if (!data) return bot.say(channel, lang_kit.error_finding_skin);
 			return bot.say(channel, `${lang_kit.current_skin} ${data.settings.folders.skin} GlitchCat`);
 		}
 		case 'bot': {
