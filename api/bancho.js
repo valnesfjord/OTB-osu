@@ -10,11 +10,11 @@ async function connect() {
         Bancho
             .connect()
             .then(() => {
-                console.log(`[\x1b[35mOTBfO\x1b[0m] Connected to osu! Bancho`);
+                console.log(`[\x1b[35mOTBfO\x1b[0m] ${lang_kit.bancho_connected}`);
                 resolve();
             })
             .catch((err) => {
-                console.log(`[\x1b[31mERROR\x1b[0m] Can't connect to osu! Bancho`);
+                console.log(`[\x1b[31mERROR\x1b[0m] ${lang_kit.bancho_disconnected}`);
                 reject(err);
             });
     }));

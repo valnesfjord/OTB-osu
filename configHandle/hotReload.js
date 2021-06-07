@@ -22,8 +22,8 @@ class hotReload {
         });
     }
     findCommand(input = ""){
-        for (let i in this.configFile){
-            for (let j of this.configFile[i]){
+        for (const i in this.configFile){
+            for (const j of this.configFile[i]){
                 if ("!"+j === input) return i;
             }
         }

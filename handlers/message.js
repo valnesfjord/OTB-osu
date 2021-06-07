@@ -1,3 +1,4 @@
+// eslint-disable-next-line camelcase
 const { settings, commands, lang_kit} = require('../configHandle');
 const { bot } = require('../api/twitch');
 const Bancho = require('../api/bancho');
@@ -9,27 +10,32 @@ const prequest = require('prequest');
 bot.on("message", async (channel, chatter, message, self) => {
     if(self) return;
     switch(commands.findCommand(message)){
-        case "np":
-            if (ws.data === null) return bot.say(channel, lang_kit.error_finding_np);
+        case "np": {
+            const data = await ws.getData();
+            if (data === null) return bot.say(channel, lang_kit.error_finding_np);
             return bot.say(channel,
-                `${ws.data.menu.bm.metadata.artist} - ${ws.data.menu.bm.metadata.title} [${
-                    ws.data.menu.bm.metadata.difficulty
-                }] ${ws.data.menu.bm.stats.fullSR} ☆ by ${ws.data.menu.bm.metadata.mapper} | Download: osu.ppy.sh/b/${
-                    ws.data.menu.bm.id
-                }#${functions.gamemodesReplacer(ws.data.menu.gameMode)}/${ws.data.menu.bm.set}`
+                `${data.menu.bm.metadata.artist} - ${data.menu.bm.metadata.title} [${data.menu.bm.metadata.difficulty
+                }] ${data.menu.bm.stats.fullSR} ☆ by ${data.menu.bm.metadata.mapper} | Download: osu.ppy.sh/b/${data.menu.bm.id
+                }#${functions.gamemodesReplacer(data.menu.gameMode)}/${data.menu.bm.set}`
             );
-        case "pp":
-            if (ws.data === null) return bot.say(channel,lang_kit.error_finding_np);
+        }
+        case "pp": {
+            const data = await ws.getData();
+            if (data === null) return bot.say(channel, lang_kit.error_finding_np);
             return bot.say(channel,
-                `100%: ${ws.data.menu.pp['100']}pp | 99%: ${ws.data.menu.pp['99']}pp | 98%: ${ws.data.menu.pp['98']}pp | 97%: ${ws.data.menu.pp['97']}pp | 96%: ${ws.data.menu.pp['96']}pp | 95%: ${ws.data.menu.pp['95']}pp`
+                `100%: ${data.menu.pp['100']}pp | 99%: ${data.menu.pp['99']}pp | 98%: ${data.menu.pp['98']}pp | 97%: ${data.menu.pp['97']}pp | 96%: ${data.menu.pp['96']}pp | 95%: ${data.menu.pp['95']}pp`
             );
-        case "skin":
-            if (ws.data === null) return bot.say(channel,lang_kit.error_finding_skin);
-            return bot.say(channel,`${lang_kit.current_skin} ${ws.data.settings.folders.skin} GlitchCat`);
-        case "bot":
+        }
+        case "skin": {
+            const data = await ws.getData();
+            if (data === null) return bot.say(channel, lang_kit.error_finding_skin);
+            return bot.say(channel, `${lang_kit.current_skin} ${data.settings.folders.skin} GlitchCat`);
+        }
+        case "bot": {
             return bot.say(channel,
                 `${lang_kit.osu_bot}`
             );
+        }
         default: {
             const linkTester = message.match(
                 /(?:http:\/\/|https:\/\/)?(osu\.ppy\.sh\/)(beatmapsets|b)\/([0-9]*)#?(osu|taiko|catch|mania)?\/?([0-9]*)?\/?\+?([\S]*)?/gi

@@ -16,7 +16,6 @@
 		"dot-notation": "warn",
 		"no-undef": "error",
 		"no-extra-boolean-cast": "error",
-		"camelcase": ["error", { "properties": "never" }],
 		"no-const-assign": "error",
 		"accessor-pairs": "off",
 		"array-callback-return": ["error", { "allowImplicit": true }],

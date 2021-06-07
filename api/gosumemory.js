@@ -1,4 +1,5 @@
-const folder = require('../configHandle').settings.gosumemory_folder+"\\gosumemory.exe";;
+const folder = require('../configHandle').settings.gosumemory_folder + "\\gosumemory.exe";
+const { lang_kit } = require('../configHandle');
 const { execFile } = require('child_process');
 const { existsSync } = require('fs');
 const pslist = require('ps-list');
@@ -14,7 +15,7 @@ async function isRunning(){
 	const list = await pslist({all: false});
 	return list.find((proc) => {
 		if (proc.name === 'gosumemory.exe') {
-			console.log("[\x1b[35mOTBfO\x1b[0m] Found gosumemory in process list, starting websocket");
+			console.log(`[\x1b[35mOTBfO\x1b[0m] ${lang_kit.gosumemory_isrunning}`);
 			return true;
 		}
 		return false;
@@ -27,15 +28,15 @@ async function spawn(){
 	return new Promise((resolve, reject) => {
 		if (path){
 			const child = execFile(`${path}`, (error) => {
-				console.error("[\x1b[31mERROR\x1b[0m] GOsumemory wasn't started or closed, please check that folder path is correct");
+				console.error(`[\x1b[31mERROR\x1b[0m] ${lang_kit.gosumemory_errored}`);
 				reject(error);
 			});
 			if (child.pid) {
-				console.log("[\x1b[35mOTBfO\x1b[0m] Waiting for gosumemory to initialize");
+				console.log(`[\x1b[35mOTBfO\x1b[0m] ${lang_kit.gosumemory_waiting}`);
 				child.stdout.on('data', (data) => {
 					data.toString().trim().split('\n').forEach((x) => {
 						if (x.startsWith('Initialization complete')) {
-							console.log("[\x1b[35mOTBfO\x1b[0m] GOsuMemory Started");
+							console.log(`[\x1b[35mOTBfO\x1b[0m] ${lang_kit.gosumemory_started}`);
 							resolve();
 						}
 					});

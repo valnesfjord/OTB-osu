@@ -34,7 +34,17 @@
         "map_approved": "Одобренная",
         "map_qualified": "Квалифицированная",
         "map_loved": "Любимая",
-        "request_added": "Реквест отправлен: "
+        "request_added": "Реквест отправлен: ",
+        "bancho_connected": "Подключение к osu! Bancho успешно",
+        "bancho_disconnected": "Ошибка подключения к osu! Bancho",
+        "gosumemory_isrunning": "Нашли GOsuMemory в списке процессов, запускаем вебсокет",
+        "gosumemory_errored": "GOsuMemory не запустилось или было закрыто, пожалуйста, проверьте путь до папки с GOsuMemory на правильность ввода",
+        "gosumemory_waiting": "Ждем, пока GOsuMemory инициализируется",
+        "gosumemory_started": "GOsuMemory запущено!",
+        "twitchbot_joined": "Твитч бот зашел на Ваш канал: ",
+        "twitchbot_errored": "Твитч бот не может запуститься",
+        "ws_connect_error": "Ошибка подключения к вебсокету GOsuMemory. Пожалуйста, запустите GOsuMemory.",
+        "ws_connected": "Подключено к вебсокету GOsuMemory."
     },
     "en_setup": {
         "interface_language": "Choose bot messages language (ru, en):",
@@ -71,6 +81,16 @@
         "map_approved": "Approved",
         "map_qualified": "Qualified",
         "map_loved": "Loved",
-        "request_added": "Request added: "
+        "request_added": "Request added: ",
+        "bancho_connected": "Connected to osu! Bancho",
+        "bancho_disconnected": "Can't connect to osu! Bancho",
+        "gosumemory_isrunning": "Found gosumemory in process list, starting websocket",
+        "gosumemory_errored": "GOsumemory wasn't started or closed, please check that folder path is correct",
+        "gosumemory_waiting": "Waiting for gosumemory to initialize",
+        "gosumemory_started": "GOsuMemory Started",
+        "twitchbot_joined": "Twitch bot joined your channel: ",
+        "twitchbot_errored": "Twitch bot unable to start",
+        "ws_connect_error": "GOsuMemory WS connecting error. Maybe you don't start it. Please start GOsuMemory.",
+        "ws_connected": "Connected to GOsuMemory WebSocket."
     }
 }

@@ -5,7 +5,7 @@ const outputdir = process.cwd();
 const leaveZipped = false;
 
 async function start(version) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         function filterRelease(release) {
             return release.prerelease === false;
         }
@@ -18,7 +18,7 @@ async function start(version) {
             .then(() => {
                 resolve();
             })
-            .catch((err) => {
+            .catch(() => {
                 resolve();
             });
     });

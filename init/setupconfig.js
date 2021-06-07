@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const prompts = require('prompts');
 const { writeFileSync, readFileSync, existsSync } = require('fs');
 const configPath = process.cwd()+'\\config\\config.json';
@@ -33,37 +34,37 @@ async function start() {
 				type: 'text',
 				name: 'osuUsername',
 				message: language_kit.osu_nick,
-				validate: value => value === "" ? language.incorrect_string : true
+				validate: (value) => value === "" ? language.incorrect_string : true
 			},
 			{
 				type: 'password',
 				name: 'osuApiKey',
 				message: language_kit.osu_apikey,
-				validate: value => value === "" ? language.incorrect_string : true
+				validate: (value) => value === "" ? language.incorrect_string : true
 			},
 			{
 				type: 'password',
 				name: 'osuIRCPassword',
 				message: language_kit.osu_ircpassword,
-				validate: value => value === "" ? language.incorrect_string : true
+				validate: (value) => value === "" ? language.incorrect_string : true
 			},
 			{
 				type: 'text',
 				name: 'twitch_bot_username',
 				message: language_kit.twitch_botlogin,
-				validate: value => value === "" ? language.incorrect_string : true
+				validate: (value) => value === "" ? language.incorrect_string : true
 			},
 			{
 				type: 'password',
 				name: 'twitch_bot_token',
 				message: language_kit.twitch_bottoken,
-				validate: value => value === "" ? language.incorrect_string : true
+				validate: (value) => value === "" ? language.incorrect_string : true
 			},
 			{
 				type: 'text',
 				name: 'twitch_channel_name',
 				message: language_kit.twitch_channellogin,
-				validate: value => value === "" ? language.incorrect_string : true
+				validate: (value) => value === "" ? language.incorrect_string : true
 			},
 			{
 				type: 'select',
@@ -77,26 +78,35 @@ async function start() {
 				],
 			},
 			{
-				type: prev => prev === 'path' ? 'text' : null,
+				type: (prev) => prev === 'path' ? 'text' : null,
 				name: 'gosumemory_path',
 				message: language_kit.gosumemory_path,
 				initial: process.cwd(),
-				validate: value => existsSync(value + "\\gosumemory.exe") ? true : "Can't find gosumemory.exe in " + value
+				validate: (value) => existsSync(value + "\\gosumemory.exe") ? true : "Can't find gosumemory.exe in " + value
 			}
 		]);
 		if (current_config.gosumemory_path === 'download') {
-			const version = await prompts({
-				type: 'select',
-				name: 'value',
-				message: language_kit.gosumemory_download,
-				choices: [
-					{ title: 'windows_386', value: 'windows_386' },
-					{ title: 'windows_amd64', value: 'windows_amd64' },
-					{ title: 'linux_386', value: 'linux_386' },
-					{ title: 'linux_amd64', value: 'linux_amd64' }
-				],
-			});
-			if (version.value != null) await downloadGOSU.start(version.value);
+			let downloadFileName = '';
+			if (process.platform === 'win32') downloadFileName += 'windows_';
+			if (process.platform !== 'win32') downloadFileName += 'linux_';
+			if (process.arch === 'x64') downloadFileName += 'amd64';
+			if (process.arch !== 'x64') downloadFileName += '386';
+			if (downloadFileName === '') {
+				const version = await prompts({
+					type: 'select',
+					name: 'value',
+					message: language_kit.gosumemory_download,
+					choices: [
+						{ title: 'windows_386', value: 'windows_386' },
+						{ title: 'windows_amd64', value: 'windows_amd64' },
+						{ title: 'linux_386', value: 'linux_386' },
+						{ title: 'linux_amd64', value: 'linux_amd64' }
+					]
+				});
+				if (version.value != null) await downloadGOSU.start(version.value);
+			} else {
+				await downloadGOSU.start(downloadFileName);
+			}
 			current_config.gosumemory_path = true;
 		}
 		current_config.interface_language = language.value;
