@@ -99,7 +99,7 @@ async function start() {
 			if (version.value != null) await downloadGOSU.start(version.value);
 			current_config.gosumemory_path = true;
 		}
-		current_config.intefrace_language = language.value;
+		current_config.interface_language = language.value;
 		writeFileSync('config/config.json', JSON.stringify(current_config, null, 2), (err) => {
 			if (err) throw err;
 		});

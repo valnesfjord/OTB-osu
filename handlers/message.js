@@ -10,7 +10,7 @@ bot.on("message", async (channel, chatter, message, self) => {
     if(self) return;
     switch(commands.findCommand(message)){
         case "np":
-            if (ws.data === null) return bot.say(channel,channel, lang_kit.error_finding_np);
+            if (ws.data === null) return bot.say(channel, lang_kit.error_finding_np);
             return bot.say(channel,
                 `${ws.data.menu.bm.metadata.artist} - ${ws.data.menu.bm.metadata.title} [${
                     ws.data.menu.bm.metadata.difficulty
