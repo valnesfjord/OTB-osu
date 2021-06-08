@@ -13,6 +13,7 @@
     "download-github-release": "^0.3.2",
     "eslint": "^7.20.0",
     "irc": "^0.5.2",
+    "merge-json": "0.1.0-b.3",
     "node-reconnect-ws": "^0.2.5",
     "prequest": "^1.0.0",
     "prompts": "^2.4.1",
