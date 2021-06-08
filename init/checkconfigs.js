@@ -28,8 +28,8 @@ const conf = require(configPath);
 const comd = require(commandsPath);
 const lang = require(languagesPath);
 if(!isEqual(defaultconf, conf)) writeFileSync(configPath, JSON.stringify(merge(defaultconf, conf),null, 2));
-if(!isEqual(defaultcomd, comd)) writeFileSync(commandsPath, JSON.stringify(merge(defaultconf, conf),null, 2));
-if(!isEqual(defaultlang, lang)) writeFileSync(configPath, JSON.stringify(merge(defaultconf, conf),null, 2));
+if(!isEqual(defaultcomd, comd)) writeFileSync(commandsPath, JSON.stringify(merge(defaultcomd, comd),null, 2));
+if(!isEqual(defaultlang, lang)) writeFileSync(languagesPath, JSON.stringify(merge(defaultlang, lang),null, 2));
 
 module.exports = require('./setupconfig');
 
