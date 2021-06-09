@@ -10,16 +10,15 @@ const folderPath = process.cwd()+'\\config\\',
 const isEqual = (defaultconfig, currentconfig) => {
     if(Object.keys(currentconfig).length === Object.keys(defaultconfig).length){
         for (const i in defaultconfig){
-            if (Object.prototype.hasOwnProperty.call(defaultconfig, i)) continue;
-            if (Object.keys(currentconfig[i]).length !== Object.keys(defaultconfig[i]).length){
-                return false;
+            if (!Object.prototype.hasOwnProperty.call(currentconfig, i)) break;
+            for(const j in defaultconfig[i]) {
+                if (!Object.prototype.hasOwnProperty.call(currentconfig[i], j)) return false;
             }
         }
         return true;
     }
     return false;
 };
-
 if(!existsSync(folderPath)) mkdirSync(folderPath);
 if (!existsSync(configPath)) writeFileSync(configPath, JSON.stringify(defaultconf, null, 2));
 if (!existsSync(commandsPath)) writeFileSync(commandsPath, JSON.stringify(defaultcomd, null, 2));
