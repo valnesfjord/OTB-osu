@@ -21,6 +21,6 @@
     "tmi.js": "^1.8.3"
   },
   "devDependencies": {
-    "caxa": "^2.0.0"
+    "caxa": "^2.1.0"
   }
 }
