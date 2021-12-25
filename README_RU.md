@@ -1,5 +1,7 @@
 # Opensource Twitch Bot for Osu
 
+# You can simply run bot in one .exe -> https://github.com/valnesfjord/OTB-osu/releases/latest
+
 # Как установить?
 1. Скачайте и установите Node JS -> https://nodejs.org/en/
 2. Скачайте и установите GOsuMemory -> https://github.com/l3lackShark/gosumemory/releases
