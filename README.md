@@ -2,6 +2,8 @@
 
 # [(RU readme here)](README_RU.md)
 
+# You can simply run bot in one .exe -> https://github.com/valnesfjord/OTB-osu/releases/latest
+
 # How to install?
 
 1. Download and install Node JS -> https://nodejs.org/en/
