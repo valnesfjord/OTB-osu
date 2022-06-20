@@ -75,7 +75,7 @@ bot.on('message', async (channel, chatter, message, self) => {
 						bm.version
 					}]] ${Number(bm.difficultyrating).toFixed(2)}☆ ${bm.bpm} BPM ${bm.diff_approach}AR ${
 						bm.diff_overall
-					}OD ${Number(bm.total_length / 60).toFixed(0)}:${Math.floor(
+					}OD ${Math.floor(Number(bm.total_length / 60))}:${Math.floor(
 						Number(bm.total_length) - (Number(bm.total_length) / 60).toFixed(0) * 60
 					)
 						.toString()
