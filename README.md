@@ -1,3 +1,4 @@
+# Deprecated! New version of bot: https://github.com/valnesfjord/osuTwitchBot
 # Opensource Twitch Bot for Osu
 
 # [(RU readme here)](README_RU.md)
